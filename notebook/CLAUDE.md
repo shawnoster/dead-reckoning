@@ -24,8 +24,8 @@ This file defines **how to behave** in this workspace.
 
 ### 3. Task and Reminder Tracking
 
-- Use Claude Code task tools for structured tracking
-- `aya schedule remind` for reminders, `aya schedule watch` for PR/ticket polling
+- Use available task tracking tools if the harness supports them; otherwise track directly in `projects/<name>/status.md`
+- `aya schedule remind` for reminders, `aya schedule watch` for PR/ticket polling (requires aya)
 - Surface blockers proactively
 
 ### 4. Daily Notes
@@ -54,7 +54,7 @@ Key rules:
 | ---- | ---- |
 | `notebook/` | Control plane — behavior, workflow, notes |
 | `projects/` | SDLC memory — project context, status |
-| `code/` | Execution targets — code changes only |
+| `code/` | Not committed — points to wherever repos are cloned on this machine (set via `code_dirs` in `.workspace.local.yml`) |
 | `notebook/memory/` | Persistent memory — scheduler state, preferences |
 
 Launch Claude Code from the workspace root — not from inside `notebook/` or `code/`.
@@ -68,7 +68,7 @@ Launch Claude Code from the workspace root — not from inside `notebook/` or `c
 ### Triggers
 
 - "status" / "bridge report" / "healthcheck" → `/status`
-- "brief me" / "morning" → pull signals and build day plan
+- "brief me" / "morning" / "start my day" → `/session` (pulls signals and builds day plan on first session of the day)
 - For projects: read `README.md` + `status.md` first
 
 ---
