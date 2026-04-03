@@ -64,8 +64,13 @@ You are now in PLANNING MODE.
 
 **Approach:**
 - This is a COLLABORATIVE CONVERSATION — propose strategies, discuss tradeoffs, refine together
+- Propose 2-3 approaches with explicit tradeoffs before settling on one
 - Update `plan.md` incrementally as the plan takes shape
 - Do not work autonomously
 
 If resuming: read `plan.md`, summarize what's been planned, then ask how to continue.
 If new: review context docs and ask what approach to explore first.
+
+**Design gate:** Before handing off to `/implement`, produce a written summary of the agreed design and get explicit approval: *"Here's what we've designed: [summary]. Proceed to implementation?"* Do not move to implementation until the user confirms.
+
+**Handoff:** When the design is approved, offer: *"Design locked. Consider producing a detailed implementation plan with exact file paths, TDD steps (failing test → implementation → verify → commit), and explicit checkpoints before writing code."*
