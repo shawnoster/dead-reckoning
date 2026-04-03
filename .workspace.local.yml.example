@@ -1,8 +1,17 @@
 # Machine-specific config — copy to .workspace.local.yml (gitignored)
+# Any value here overrides the corresponding value in .workspace.yml.
 
-# Absolute path to workspace root (optional — Claude Code infers from launch dir)
+# Absolute path to workspace root
 # workspace_root: ~/workspace
+
+# Override directory paths when they live outside the workspace root.
+# Values in .workspace.yml are relative to workspace_root by default.
+# Use absolute paths here to point anywhere on your machine.
+# directories:
+#   projects: ~/projects          # if your projects dir lives outside the workspace
+#   notebook: ~/notes             # if your notebook lives elsewhere
 
 # Paths to local code repos (used by /switch for code_dir resolution)
 code_dirs:
   - ~/workspace/code
+  # - ~/src

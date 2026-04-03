@@ -90,9 +90,9 @@ claude .
 
 Two config files govern the workspace layout:
 
-**`.workspace.yml`** (committed, shared) — the structure: directory names, behavioral anchors, instance label.
+**`.workspace.yml`** (committed, shared) — directory names relative to the workspace root, behavioral anchors, instance label.
 
-**`.workspace.local.yml`** (gitignored, per-machine) — machine-specific paths. Copy the example and fill it in:
+**`.workspace.local.yml`** (gitignored, per-machine) — overrides for your machine. Copy the example and fill it in:
 
 ```bash
 cp .workspace.local.yml.example .workspace.local.yml
@@ -104,10 +104,19 @@ workspace_root: ~/workspace        # absolute path to this repo
 
 code_dirs:
   - ~/workspace/code               # where cloned repos live
-  # - ~/src                        # add more if needed
 ```
 
-This is how `/switch` knows where to find `code_dir` entries in project frontmatter, and how aya knows where to anchor the workspace.
+Directory paths in `.workspace.yml` are relative to `workspace_root` by default.
+If a directory lives **outside** the workspace, override it here with an absolute path:
+
+```yaml
+# .workspace.local.yml
+directories:
+  projects: ~/projects             # projects dir lives outside the workspace
+  notebook: ~/notes                # so does the notebook
+```
+
+This means you can keep `projects/` in a separate repo, a Dropbox folder, or anywhere else on the machine — skills read the merged config and find it regardless.
 
 ## Layout
 
