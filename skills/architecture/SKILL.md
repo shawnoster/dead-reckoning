@@ -65,3 +65,5 @@ You are now in ARCHITECTURE MODE.
 
 If resuming: load `architecture.md`, summarize current understanding, then ask what to explore next.
 If new: start from `discovery.md` and ask what aspect of the architecture to investigate first.
+
+**Handoff:** When the architecture is sufficiently understood, offer: *"System understood — ready to design the approach? Consider a structured design session: propose 2-3 options with tradeoffs, get explicit approval on the design before writing any code, then produce a detailed step-by-step implementation plan."*
