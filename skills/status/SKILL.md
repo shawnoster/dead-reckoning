@@ -15,7 +15,7 @@ Run a full readiness check for this workspace and report the result.
 
 ## 1. Run aya status
 
-If `aya` is installed, run `aya status`. Report the output verbatim.
+If `aya` is installed, run `aya status -f json`. Parse the JSON to extract system health, alerts, due reminders, upcoming reminders, and watches. Use this structured data to populate the report below — do not dump raw JSON to the user.
 
 If aya is not installed, note that and continue with a manual check.
 
