@@ -34,31 +34,34 @@ tomorrow. Everything else happens in the middle.
 
 Install from [claude.ai/code](https://claude.ai/code) — available as a CLI or desktop app.
 
-### aya CLI
+### aya CLI — optional but recommended
 
-aya handles scheduling, reminders, PR/ticket watches, and the optional work↔home relay.
-It's a Python CLI tool — **not a Claude Code plugin** and cannot be installed via `make link-skills`.
-Install it separately:
+Without aya, you get the core session loop: `/session`, `/debrief`, project
+context, daily notes. That's the whole method and it works on its own.
+
+With aya, you get:
+- **Reminders and watches** — `aya schedule remind` for time-based nudges;
+  `aya schedule watch` to poll a PR or ticket and alert you when it changes
+- **Work ↔ home relay** — async context sync between two machines over
+  the Nostr protocol; carry decisions and open threads between instances
+  without shared login or manual file transfer
+- **`make notebook-status`** — the workspace health check
+
+aya is a Python CLI tool — **not a Claude Code plugin**, cannot be installed
+via `make link-skills`. Install it separately:
 
 ```bash
-# Requires uv (https://docs.astral.sh/uv/)
+# Requires uv — install uv first if you don't have it:
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Then install aya:
 uv tool install git+https://github.com/shawnoster/aya
 aya init    # generates your identity keypair in ~/.aya/profile.json
 ```
 
-No uv? Install uv first:
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-aya is optional — the core session loop works without it. You lose:
-- `aya schedule remind` and `aya schedule watch`
-- The work↔home relay
-- The `make notebook-status` check
-
 ### MCP servers (optional)
 
-Connect integrations to unlock signal-pull features in `/session`:
+Connect integrations to unlock signal-pull in `/session`:
 GitHub · Jira/Confluence · Slack · Google Calendar
 
 ## Bootstrap
