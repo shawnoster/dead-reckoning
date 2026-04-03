@@ -132,13 +132,15 @@ workspace/
 │   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
-├── code/              Cloned repos — read/write code here, docs never
+├── code/              Cloned repos — read and write code here
 ├── skills/            Command definitions (session, debrief, meeting, ...)
 └── Makefile           make link-skills wires skills → .claude/commands/
 ```
 
-**Cardinal rule:** `code/` is never the source of truth for anything.
-Insights from reading a codebase go in `projects/<name>/architecture.md`.
+**Keep notes out of `code/`.** When you learn something by reading a codebase,
+write it up in `projects/<name>/architecture.md` — not as a file dropped in the
+repo, not as a code comment. Your understanding of the code belongs in `projects/`,
+not alongside the code itself.
 
 ### The knowledge folder
 
