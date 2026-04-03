@@ -8,9 +8,9 @@
 |------|--------|------|
 | **Root** | `workspace/` | Operating system — assistant rules, notes, scripts, links |
 | **Execution memory** | `projects/` | State, decisions, discovery, plans per project |
-| **Working copies** | `code/` | Cloned repos for reading and writing code — never canonical docs |
+| **Working copies** | `code/` | Cloned repos — gitignored or external; path set in `.workspace.local.yml` |
 
-`code/` is never the source of truth for anything. All understanding lives in `projects/`.
+Keep notes out of `code/`. When you learn something from a codebase, write it up in `projects/`, not alongside the code.
 
 ## Launch Point + Memory Contract
 
@@ -18,7 +18,7 @@
 - **Behavior/config**: `notebook/AGENTS.md` (this file) + `notebook/CLAUDE.md`
 - **Project memory**: `projects/<name>/` — status, decisions, discovery, plans
 - **Session memory**: `notebook/memory/` — scheduler state, preferences
-- **Execution targets**: `code/<repo>`
+- **Execution targets**: wherever `code_dirs` points in `.workspace.local.yml`
 
 ## Session Lifecycle
 
@@ -67,15 +67,17 @@ workspace/
 │   ├── AGENTS.md              # This file — structure + routing
 │   ├── CLAUDE.md              # Behavioral instructions
 │   ├── method.md              # DR spec
+│   ├── inbox.md               # Capture queue — /triage routes items out
 │   ├── daily/                 # YYYY-MM-DD.md — primary activity log
 │   ├── meetings/              # Cross-project meeting notes
 │   ├── ideas/                 # Pre-project thinking
 │   ├── memory/                # Scheduler state, preferences
 │   └── templates/             # Project file templates
 ├── projects/                  # Project documentation
-├── code/                      # Cloned repositories
 └── skills/                    # Command definitions
 ```
+
+`code/` is not committed — point `code_dirs` in `.workspace.local.yml` to wherever you clone repos on this machine.
 
 ## Project Structure Convention
 
@@ -99,9 +101,9 @@ Ad-hoc files use type prefix: `research-*.md`, `proposal-*.md`, `assessment-*.md
 - `/session <type>` — start a work block (focus-work, brainstorming, research, meetings, writing)
 - `/debrief` — close a block or the day
 - `/meeting` — capture a meeting
+- `/triage` — process `notebook/inbox.md` and route items out
 - `/next` — mid-session pivot between tasks
 - `/status` — workspace readiness check
-- `aya schedule --help` — scheduler CLI reference
 - `make notebook-status` — readiness check
 - `make link-skills` — (re)wire local skills as Claude Code commands
 

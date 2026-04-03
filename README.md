@@ -126,13 +126,13 @@ workspace/
 │   ├── AGENTS.md      Structure + routing (Claude reads this first every session)
 │   ├── CLAUDE.md      Behavioral instructions
 │   ├── method.md      Full Dead Reckoning spec
+│   ├── inbox.md       Capture queue — drop anything here, /triage routes it out
 │   ├── daily/         YYYY-MM-DD.md — one log file per day
 │   ├── meetings/      Cross-project meeting notes
 │   ├── ideas/         Pre-project thinking (not yet actionable)
 │   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
-├── code/              Cloned repos — read and write code here
 ├── skills/            Command definitions (session, debrief, meeting, ...)
 └── Makefile           make link-skills wires skills → .claude/commands/
 ```
@@ -141,6 +141,18 @@ workspace/
 write it up in `projects/<name>/architecture.md` — not as a file dropped in the
 repo, not as a code comment. Your understanding of the code belongs in `projects/`,
 not alongside the code itself.
+
+`code/` is not a committed directory — point `code_dirs` in `.workspace.local.yml`
+to wherever you clone repos on this machine. The workspace doesn't own that directory.
+
+### The inbox
+
+`notebook/inbox.md` is zero-friction capture. Drop anything here — tasks, ideas,
+links, questions, notes — without stopping to file it properly. Run `/triage` to
+route items to the right place: active projects, daily notes, `knowledge/`, `ideas/`,
+or discard.
+
+The flow: capture now, decide later.
 
 ### The knowledge folder
 
@@ -189,6 +201,7 @@ cp notebook/templates/status-template.md projects/my-project/status.md
 | `/debrief` | Close a block or the day |
 | `/switch <project>` | Load project context mid-session (shows picker if no arg) |
 | `/meeting` | Capture a meeting with decisions + owners |
+| `/triage` | Process `notebook/inbox.md` — route items to projects, daily notes, knowledge, or discard |
 | `/next` | Mid-session pivot — tidy up and surface what's next |
 | `/status` | Workspace readiness check |
 | `/discovery <project>` | Start discovery phase — produces `discovery.md` |
@@ -196,10 +209,27 @@ cp notebook/templates/status-template.md projects/my-project/status.md
 | `/plan <project>` | Design implementation — produces `plan.md` |
 | `/implement <project>` | Build — code changes with plan tracking |
 | `/finish` | Commit, push, PR, close ticket |
-| `/relay` | Send/receive packets between instances (requires aya pairing) |
 | `/session-learnings` | Capture what was learned to `notebook/knowledge/` |
 
 Session types: `focus-work` · `brainstorming` · `research` · `meetings` · `writing` · `gaming`
+
+## Multi-machine relay (advanced)
+
+If you run two instances of this workspace — work and home — aya's relay syncs
+context between them asynchronously over the Nostr protocol. No shared login,
+no VPN, no manual file transfer.
+
+```bash
+# Send context to the other instance
+echo "notes here" | aya dispatch --to home --intent "end-of-day carry"
+
+# Receive at home
+aya receive --as home
+```
+
+Packets are signed with your DID keypair and verified before ingesting. Requires
+pairing two aya instances first (`aya pair`). The `/relay` skill in `skills/relay/`
+handles the full send/receive/status flow. Full setup in `notebook/getting-started.md`.
 
 ## Going further
 
