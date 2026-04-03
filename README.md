@@ -15,18 +15,18 @@ Three things:
 - `notebook/daily/YYYY-MM-DD.md` — the continuous log
 - Claude Code — the navigator that reads both
 
-Two commands run the whole loop:
+One command runs the whole loop:
 
 ```
 /session focus-work my-project    ← start a work block
-/debrief                          ← close it
+/session end                      ← close it
 ```
 
 `/session` on the first run of the day pulls signals from connected integrations
 (Jira, GitHub, Slack, Calendar), builds a Tier 1/2/3 day plan, and loads context
 for your named project. Every subsequent session skips the briefing and just loads
-context. `/debrief` writes the progress log, reconciles plan vs actual, and stubs
-tomorrow. Everything else happens in the middle.
+context. `/session end` writes the progress log, reconciles plan vs actual, and
+stubs tomorrow. Everything else happens in the middle.
 
 ## Prerequisites
 
@@ -36,8 +36,8 @@ Install from [claude.ai/code](https://claude.ai/code) — available as a CLI or 
 
 ### aya CLI — optional but recommended
 
-Without aya, you get the core session loop: `/session`, `/debrief`, project
-context, daily notes. That's the whole method and it works on its own.
+Without aya, you get the core session loop: `/session`, project context, daily
+notes. That's the whole method and it works on its own.
 
 With aya, you get:
 - **Reminders and watches** — `aya schedule remind` for time-based nudges;
@@ -133,7 +133,7 @@ workspace/
 │   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
-├── skills/            Command definitions (session, debrief, meeting, ...)
+├── skills/            Command definitions (session, meeting, switch, ...)
 └── Makefile           make link-skills wires skills → .claude/commands/
 ```
 
@@ -177,7 +177,6 @@ slash commands.
 make link-skills
 # skills/session/SKILL.md  →  .claude/commands/session.md
 # skills/switch/SKILL.md   →  .claude/commands/switch.md
-# skills/debrief/SKILL.md  →  .claude/commands/debrief.md
 # ...
 ```
 
@@ -203,7 +202,7 @@ to understand the project context. When you're ready to work:
 | Command | What it does |
 |---------|--------------|
 | `/session <type> [project]` | Start a work block |
-| `/debrief` | Close a block or the day |
+| `/session end` | Close a block or the day |
 | `/switch <project>` | Load project context mid-session (shows picker if no arg) |
 | `/meeting` | Capture a meeting with decisions + owners |
 | `/triage` | Process `notebook/inbox.md` — route items to projects, daily notes, knowledge, or discard |

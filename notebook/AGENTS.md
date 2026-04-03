@@ -25,7 +25,7 @@ Keep notes out of `code/`. When you learn something from a codebase, write it up
 ```
 /session <type> [focus]   ← start a work block
   ... work ...
-/debrief                  ← close the block or the day
+/session end              ← close the block or the day
 ```
 
 ## Signal Intake and Routing
@@ -99,7 +99,7 @@ Ad-hoc files use type prefix: `research-*.md`, `proposal-*.md`, `assessment-*.md
 ## Commands
 
 - `/session <type>` — start a work block (focus-work, brainstorming, research, meetings, writing)
-- `/debrief` — close a block or the day
+- `/session end` — close a block or the day
 - `/meeting` — capture a meeting
 - `/triage` — process `notebook/inbox.md` and route items out
 - `/next` — mid-session pivot between tasks
@@ -119,5 +119,5 @@ This workspace runs **Dead Reckoning** (DR). Full spec: `notebook/method.md`.
 
 ```
 /session <type> [focus]   ← start a work block
-/debrief                  ← close the block
+/session end              ← close the block
 ```
