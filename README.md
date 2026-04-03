@@ -185,11 +185,16 @@ To customize a command, edit the skill file and re-run `make link-skills`.
 
 ## Your first project
 
-```bash
-mkdir -p projects/my-project
-cp notebook/templates/README-template.md projects/my-project/README.md
-cp notebook/templates/status-template.md projects/my-project/status.md
-# edit the frontmatter (ticket key, repos, run env)
+```
+/discovery my-project
+```
+
+`/discovery` scaffolds the project directory automatically — creates
+`projects/my-project/` with `README.md`, `status.md`, and `discovery.md`
+from the templates in `notebook/templates/`, then drops into a conversation
+to understand the project context. When you're ready to work:
+
+```
 /session focus-work my-project
 ```
 
@@ -204,7 +209,7 @@ cp notebook/templates/status-template.md projects/my-project/status.md
 | `/triage` | Process `notebook/inbox.md` — route items to projects, daily notes, knowledge, or discard |
 | `/next` | Mid-session pivot — tidy up and surface what's next |
 | `/status` | Workspace readiness check |
-| `/discovery <project>` | Start discovery phase — produces `discovery.md` |
+| `/discovery <project>` | Scaffold project + start discovery phase — produces `discovery.md` |
 | `/architecture <project>` | Analyze codebase — produces `architecture.md` |
 | `/plan <project>` | Design implementation — produces `plan.md` |
 | `/implement <project>` | Build — code changes with plan tracking |
