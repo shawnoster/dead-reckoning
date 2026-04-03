@@ -79,9 +79,12 @@ Three tiers. Each has one job. They don't overlap.
 |------|--------|-----|------|
 | Control plane | `notebook/` | Behavior, workflow, the log | No project docs, no code |
 | Execution memory | `projects/` | All understanding of active work | No raw code, no logs |
-| Working copies | `code/` | Cloned repos for reading and editing | No docs, no truth |
+| Working copies | `code/` | Cloned repos for reading and editing | No notes or docs |
 
-**The cardinal rule:** `code/` is never the source of truth for anything. If you learn something about a codebase, it lives in `projects/`, not as comments in the code.
+**Keep notes out of `code/`.** Code is the source of truth for what a system
+does — read it and edit it here. But when you learn something about a codebase
+during a session, write that understanding up in `projects/<name>/architecture.md`,
+not as a file dropped in the repo or a comment in the code.
 
 ---
 
@@ -146,6 +149,9 @@ projects/<name>/
   discovery.md    Business context, requirements, affected repos, open questions.
 
   architecture.md Current implementation analysis, technical design, data flow.
+                  WHY HERE: this is your understanding of the codebase — the
+                  insight you built by reading code/. It belongs to the project,
+                  not to the repo.
 
   plan.md         Implementation approach, steps, decisions made.
 
@@ -162,13 +168,12 @@ projects/<name>/
 
 ### `code/` — working copies
 
-Cloned repositories. Read and edit here. Never write docs here.
+Cloned repositories. Read and edit code here. Don't create notes or docs here.
 
 ```
-code/<repo-name>/   Cloned from source control. The authoritative source for
-                    application code. If you learn something about this codebase
-                    during a session, the insight goes in projects/<name>/,
-                    not as a comment in code/.
+code/<repo-name>/   The authoritative source for application code. Read it,
+                    edit it, run it. When you learn something about how it works,
+                    write that up in projects/<name>/architecture.md — not here.
 ```
 
 ---
@@ -182,7 +187,7 @@ code/<repo-name>/   Cloned from source control. The authoritative source for
 | Meeting note (cross-project, org) | `notebook/meetings/` | No single project owns it |
 | Half-formed idea | `notebook/ideas/` | Not a project yet |
 | Idea with a clear goal | `projects/<name>/` with README + status | Promoted to project |
-| Understanding of a codebase | `projects/<name>/architecture.md` | Insight belongs to project memory |
+| Understanding of a codebase | `projects/<name>/architecture.md` | Insight belongs to project memory, not the repo |
 | Polished deliverable | `projects/<name>/documents/` | Findable by project |
 | Evergreen engineering knowledge | `projects/engineering-handbook/` | Reference, no done state |
 | Template for future use | `notebook/templates/` | Governs how work is structured |
