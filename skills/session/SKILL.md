@@ -310,10 +310,16 @@ Done. No recap, no summary, no ceremony.
 
 2. **Carry-overs** — anything unfinished that needs tomorrow. Flag if blocking.
 
-3. **Tomorrow's stub** — create `notebook/daily/{YYYY-MM-DD}.md` for tomorrow.
+3. **Knowledge harvest** — ask:
+   > "Anything from today worth capturing in `notebook/knowledge/`?"
+   If yes, invoke the **`/session-learnings`** skill. If the user declines
+   or says "nothing new," move on — don't force it. This is the structured
+   step that prevents hard-won context from evaporating into git blame.
+
+4. **Tomorrow's stub** — create `notebook/daily/{YYYY-MM-DD}.md` for tomorrow.
    Add frontmatter + `## Plan` stub with carry-overs already populated.
 
-4. **Status updates** — for any project that advanced today, update
+5. **Status updates** — for any project that advanced today, update
    `projects/<name>/status.md`: current state, blockers, next 3 actions.
 
 ---

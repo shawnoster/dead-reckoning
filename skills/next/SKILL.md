@@ -18,9 +18,9 @@ Run steps 1–3 concurrently.
 
 ## 0. Time check
 
-If it's late in the day or the user has been working for a long stretch, offer `/debrief` instead:
+If it's late in the day or the user has been working for a long stretch, offer `/session end` instead:
 
-> "It's getting late — want to close out with `/debrief`, or keep going?"
+> "It's getting late — want to close out with `/session end`, or keep going?"
 
 ---
 
@@ -99,4 +99,4 @@ Ask: "Want to take one of these, or is there something else on your mind?"
 
 - **Works cold** — no prior session, daily plan, or progress log required
 - Lighter than a full session start — no calendar, no full project status scan
-- Does not replace `/debrief` — if the day is ending, use that instead
+- Does not replace `/session end` — if the day is ending, use that instead

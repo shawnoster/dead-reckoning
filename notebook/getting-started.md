@@ -38,7 +38,7 @@ workspace/
 ```bash
 /session focus-work my-project    ← start a work block
   ... work ...
-/debrief                          ← close the block
+/session end                          ← close the block
 ```
 
 That's the whole thing. Everything else is what happens in the middle.
@@ -48,7 +48,7 @@ That's the whole thing. Everything else is what happens in the middle.
 - Any session with a named project → loads `status.md` + `README.md`, surfaces current state and blockers, offers to go deeper layer by layer
 - Sets AI posture to match session type (concise in `focus-work`, expansive in `brainstorming`, capture-first in `meetings`)
 
-**`/debrief`** does:
+**`/session end`** does:
 - Appends a timestamped progress log entry (what happened, ticket/PR refs)
 - Asks one question: *done for the day, or more sessions coming?*
   - More sessions → lightweight carry-over note, done
@@ -60,14 +60,14 @@ Session types: `focus-work`, `brainstorming`, `research`, `meetings`, `writing`,
 
 ## How Commands Work
 
-The `/session`, `/debrief`, and other commands are **skills** — markdown files that Claude Code reads as command definitions.
+The `/session`, `/session end`, and other commands are **skills** — markdown files that Claude Code reads as command definitions.
 
 ```
 workspace/
 └── skills/
     ├── session/
     │   └── SKILL.md     ← the command definition
-    ├── debrief/
+    ├── session-learnings/
     │   └── SKILL.md
     ├── meeting/
     │   └── SKILL.md
@@ -79,11 +79,11 @@ Skills are wired as Claude Code commands via symlinks:
 ```bash
 make link-skills
 # Creates: .claude/commands/session.md  → ../../skills/session/SKILL.md
-#          .claude/commands/debrief.md  → ../../skills/debrief/SKILL.md
+#          .claude/commands/session end.md  → ../../skills/session end/SKILL.md
 #          ... (one per skill)
 ```
 
-After `make link-skills`, Claude Code picks them up and they're available as `/session`, `/debrief`, etc. **This is the step that wires the system together — run it after cloning.**
+After `make link-skills`, Claude Code picks them up and they're available as `/session`, `/session end`, etc. **This is the step that wires the system together — run it after cloning.**
 
 To customize a command, edit `skills/<name>/SKILL.md` and re-run `make link-skills`.
 
@@ -110,7 +110,7 @@ Use `/next` to pivot between tasks — it tidies up, scans for new signals, and 
 ### End of a block
 
 ```bash
-/debrief
+/session end
 ```
 
 Mid-day: a carry-over note and done. End of day: full reconcile — plan vs actual, what slipped, tomorrow's stub, and `status.md` updates for every project that moved.
@@ -216,7 +216,7 @@ aya init    # generates DID keypair in ~/.aya/profile.json
 # GitHub, Jira, Slack, Calendar — see each server's install docs
 
 # 6. Verify
-make notebook-status
+aya status
 ```
 
 If pairing a second instance (work ↔ home relay):
@@ -249,6 +249,6 @@ aya pair --code <code> --label home
 
 Most productivity systems are **push**: you decide what to track, you maintain it, you remember to check it.
 
-This system is **pull**: the AI reads the log, loads the context, surfaces what matters. You write to it; it navigates from it. The only discipline required is closing sessions with `/debrief` so `status.md` stays current.
+This system is **pull**: the AI reads the log, loads the context, surfaces what matters. You write to it; it navigates from it. The only discipline required is closing sessions with `/session end` so `status.md` stays current.
 
 The log IS the position. As long as you keep the log, you always know where you are.
