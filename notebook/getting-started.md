@@ -156,7 +156,7 @@ Personal orchestration layer:
 ```bash
 aya schedule remind --due "tomorrow 9am" -m "Review staging deploy"
 aya schedule watch github-pr owner/repo#123
-aya receive --instance home         # check for relay packets
+aya receive --as home         # check for relay packets
 aya schedule list                   # active reminders + watches
 ```
 
@@ -188,7 +188,7 @@ Two instances of this system can run concurrently: work and home. They stay in s
 echo "Context for home" | aya dispatch --to home --intent "subject"
 
 # Check for packets from the other instance
-aya receive --instance home
+aya receive --as home
 ```
 
 Packets are signed with your DID keypair and verified before ingestion. Relay uses public Nostr relays — do not send secrets or PII through it.

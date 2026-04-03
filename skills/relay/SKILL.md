@@ -76,7 +76,7 @@ If no trusted peers: "No paired instances. Run `aya init` then `aya pair` to con
 echo "<markdown content>" | aya dispatch \
   --to home \
   --intent "<one-line intent>" \
-  --instance work
+  --as work
 ```
 
 ### Seed packet (open question, thread to resume)
@@ -88,7 +88,7 @@ aya dispatch \
   --seed \
   --opener "<single opening question>" \
   --context "<2–3 sentence background>" \
-  --instance work
+  --as work
 ```
 
 ### File packet
@@ -98,7 +98,7 @@ aya dispatch \
   --to home \
   --intent "<one-line intent>" \
   --files path/to/file.md \
-  --instance work
+  --as work
 ```
 
 After sending: report packet ID, relay, and type.
@@ -108,8 +108,8 @@ After sending: report packet ID, relay, and type.
 ## 3. Receive
 
 ```bash
-aya inbox --instance home    # check without ingesting
-aya receive --instance home  # ingest trusted packets
+aya inbox --as home    # check without ingesting
+aya receive --as home  # ingest trusted packets
 ```
 
 For each packet:
@@ -133,4 +133,4 @@ For each packet:
 
 - The relay is async and public (Nostr) — do not send secrets, credentials, or PII
 - Seed packets are lighter for open-ended questions; content packets for carrying material
-- Always pass `--instance <label>` explicitly — the default may not be what you expect
+- Always pass `--as <label>` explicitly — the default may not be what you expect
