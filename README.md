@@ -30,38 +30,80 @@ tomorrow. Everything else happens in the middle.
 
 ## Prerequisites
 
-| Tool | Purpose |
-|------|---------|
-| [Claude Code](https://claude.ai/code) | The AI navigator (CLI or desktop) |
-| [aya](https://github.com/shawnoster/aya) | Scheduler, reminders, work↔home relay |
+### Claude Code
 
-MCP servers (optional, but unlock signal-pull features):
-GitHub · Jira/Confluence · Slack · Google Calendar
+Install from [claude.ai/code](https://claude.ai/code) — available as a CLI or desktop app.
 
-aya install:
+### aya CLI
+
+aya handles scheduling, reminders, PR/ticket watches, and the optional work↔home relay.
+It's a Python CLI tool — **not a Claude Code plugin** and cannot be installed via `make link-skills`.
+Install it separately:
+
 ```bash
+# Requires uv (https://docs.astral.sh/uv/)
 uv tool install git+https://github.com/shawnoster/aya
 aya init    # generates your identity keypair in ~/.aya/profile.json
 ```
 
+No uv? Install uv first:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+aya is optional — the core session loop works without it. You lose:
+- `aya schedule remind` and `aya schedule watch`
+- The work↔home relay
+- The `make notebook-status` check
+
+### MCP servers (optional)
+
+Connect integrations to unlock signal-pull features in `/session`:
+GitHub · Jira/Confluence · Slack · Google Calendar
+
 ## Bootstrap
 
 ```bash
-# Clone
+# 1. Clone
 git clone https://github.com/shawnoster/dead-reckoning ~/workspace
 cd ~/workspace
 
-# Wire skills as Claude Code commands
+# 2. Wire skills as Claude Code commands
 make link-skills
 
-# Open Claude Code from the workspace root — this matters
+# 3. Configure machine-specific paths (see below)
+cp .workspace.local.yml.example .workspace.local.yml
+# edit .workspace.local.yml — set workspace_root and code_dirs
+
+# 4. Open Claude Code from the workspace root — this matters
 claude .
 
-# First session
+# 5. First session
 /session focus-work
 ```
 
-That's it. Claude reads `notebook/AGENTS.md` on launch and knows the structure.
+## Configuring paths
+
+Two config files govern the workspace layout:
+
+**`.workspace.yml`** (committed, shared) — the structure: directory names, behavioral anchors, instance label.
+
+**`.workspace.local.yml`** (gitignored, per-machine) — machine-specific paths. Copy the example and fill it in:
+
+```bash
+cp .workspace.local.yml.example .workspace.local.yml
+```
+
+```yaml
+# .workspace.local.yml — your machine, gitignored
+workspace_root: ~/workspace        # absolute path to this repo
+
+code_dirs:
+  - ~/workspace/code               # where cloned repos live
+  # - ~/src                        # add more if needed
+```
+
+This is how `/switch` knows where to find `code_dir` entries in project frontmatter, and how aya knows where to anchor the workspace.
 
 ## Layout
 
@@ -74,6 +116,7 @@ workspace/
 │   ├── daily/         YYYY-MM-DD.md — one log file per day
 │   ├── meetings/      Cross-project meeting notes
 │   ├── ideas/         Pre-project thinking (not yet actionable)
+│   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
 ├── code/              Cloned repos — read/write code here, docs never
@@ -84,6 +127,19 @@ workspace/
 **Cardinal rule:** `code/` is never the source of truth for anything.
 Insights from reading a codebase go in `projects/<name>/architecture.md`.
 
+### The knowledge folder
+
+`notebook/knowledge/` is for personal, evergreen knowledge that doesn't belong to any one project:
+
+- Code snippets and patterns you reach for repeatedly
+- Onboarding notes for tools, languages, or systems
+- Curated links (Python resources, library docs, reference material)
+- Tool quirks and environment gotchas discovered during sessions
+
+Files are organized by domain: `knowledge/python.md`, `knowledge/aws.md`, `knowledge/dev-environment.md`, etc.
+
+The `/session-learnings` command writes here automatically at the end of deep-dive sessions.
+
 ## How commands work
 
 Skills are markdown files in `skills/<name>/SKILL.md`. `make link-skills`
@@ -93,6 +149,7 @@ slash commands.
 ```bash
 make link-skills
 # skills/session/SKILL.md  →  .claude/commands/session.md
+# skills/switch/SKILL.md   →  .claude/commands/switch.md
 # skills/debrief/SKILL.md  →  .claude/commands/debrief.md
 # ...
 ```
@@ -115,6 +172,7 @@ cp notebook/templates/status-template.md projects/my-project/status.md
 |---------|--------------|
 | `/session <type> [project]` | Start a work block |
 | `/debrief` | Close a block or the day |
+| `/switch <project>` | Load project context mid-session (shows picker if no arg) |
 | `/meeting` | Capture a meeting with decisions + owners |
 | `/next` | Mid-session pivot — tidy up and surface what's next |
 | `/status` | Workspace readiness check |
