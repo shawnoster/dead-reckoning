@@ -76,4 +76,7 @@ You are now in DISCOVERY MODE.
 - Do not work autonomously
 
 If resuming: read `discovery.md`, summarize findings so far, then ask how to continue.
-If new: ask about the context and what problem this project is solving.
+If new: **before asking the user to describe the problem**, dead-reckon from available context:
+- If a project tracking integration is connected, query it for the ticket title, description, and acceptance criteria first.
+- If a code hosting integration is connected, search for existing branches or PRs referencing the project name or ticket key.
+- Pre-populate `discovery.md` with what you find, then ask only what's still missing.
