@@ -64,7 +64,7 @@ If a project tracking integration is connected and a ticket was associated with 
 
 ## 5. Log the activity
 
-Append to today's daily notes under `## Progress Log`:
+Append to today's daily notes under `## Progress`:
 
 ```
 - **HH:MM** — Opened PR #{number} — {PR title} · {ticket ref}

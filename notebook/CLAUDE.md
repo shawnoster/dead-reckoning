@@ -33,7 +33,7 @@ This file defines **how to behave** in this workspace.
 Key rules:
 
 - One file per day: `notebook/daily/YYYY-MM-DD.md`
-- Two halves: Plan (first session of day) + Progress Log (live throughout day)
+- Two halves: Plan (first session of day) + Progress (live throughout day)
 - **Timestamp contract**: run `date +'%H:%M %Z'` before writing — never use `<current_datetime>` (UTC)
 - Substantive entries only — no idle/holding; max 2 lines; include ticket/PR refs
 

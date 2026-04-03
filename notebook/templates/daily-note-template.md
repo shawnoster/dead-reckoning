@@ -32,7 +32,7 @@ Symbols: ✅ done · 🔄 in-flight · ➡️ slipped · ❌ blocked
 
 ---
 
-## Progress Log
+## Progress
 
 <!--
 Timestamped entries appended throughout the day.

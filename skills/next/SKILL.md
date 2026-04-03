@@ -58,7 +58,7 @@ Any of these is sufficient. Works cold.
 
 ## 4. Log activity
 
-Run `date +'%H:%M %Z'`. Append a one-liner to `notebook/daily/{TODAY}.md` under `## Progress Log`:
+Run `date +'%H:%M %Z'`. Append a one-liner to `notebook/daily/{TODAY}.md` under `## Progress`:
 
 ```
 - **HH:MM** — {brief description} — {ticket/PR ref if applicable}

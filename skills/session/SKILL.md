@@ -194,7 +194,7 @@ If `notebook/daily/{TODAY}.md` doesn't exist, create it:
 ## Plan
 {tier 1 and tier 2 items as a checklist}
 
-## Progress Log
+## Progress
 {empty}
 
 ## Notes
@@ -264,7 +264,7 @@ State the posture briefly, then stop talking and let the user work.
 
 ### 6. Log the session start
 
-Append to `notebook/daily/{TODAY}.md` under `## Progress Log`:
+Append to `notebook/daily/{TODAY}.md` under `## Progress`:
 
 ```
 - **HH:MM** — Session: {type} / {focus} — [one line of intent]

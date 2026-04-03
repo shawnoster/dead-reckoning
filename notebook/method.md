@@ -203,7 +203,7 @@ code/<repo-name>/   The authoritative source for application code. Read it,
 ## Plan
 Tier 1 / Tier 2 / Tier 3 — written by the first /session of the day
 
-## Progress Log
+## Progress
 - **HH:MM** — session: focus-work / my-project — what you were going into
 - **HH:MM** — what shipped or changed (ticket/PR refs)
 - **HH:MM** — session: brainstorming / architecture
