@@ -1,0 +1,8 @@
+# Machine-specific config — copy to .workspace.local.yml (gitignored)
+
+# Absolute path to workspace root (optional — Claude Code infers from launch dir)
+# workspace_root: ~/workspace
+
+# Paths to local code repos (used by /switch for code_dir resolution)
+code_dirs:
+  - ~/workspace/code

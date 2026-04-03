@@ -1,0 +1,12 @@
+version: "1"
+
+# Change to "work" or "home" if using the aya relay between two machines
+instance_label: default
+
+directories:
+  notebook: notebook
+  projects: projects
+  daily: notebook/daily
+
+behavioral_anchors:
+  method: notebook/method.md
