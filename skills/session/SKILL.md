@@ -311,7 +311,7 @@ Done. No recap, no summary, no ceremony.
 2. **Carry-overs** — anything unfinished that needs tomorrow. Flag if blocking.
 
 3. **Knowledge harvest** — ask:
-   > *"Anything from today worth capturing in knowledge/?"*
+   > "Anything from today worth capturing in `notebook/knowledge/`?"
    If yes, invoke the **`/session-learnings`** skill. If the user declines
    or says "nothing new," move on — don't force it. This is the structured
    step that prevents hard-won context from evaporating into git blame.

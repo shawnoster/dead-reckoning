@@ -28,7 +28,7 @@ Two commands. Everything else is in the middle.
 ```
 /session <type> [focus]    ← start a work block, declare intent
   ... work ...
-/debrief                   ← close the block, capture what happened
+/session end                   ← close the block, capture what happened
 ```
 
 That's it. Run it 1–4 times a day. Each session can be different:
@@ -61,7 +61,7 @@ That's it. Run it 1–4 times a day. Each session can be different:
 - **Posture shift**: adjusts AI behavior to match the session type
   (concise in focus-work, expansive in brainstorming, capture-first in meetings)
 
-### What `/debrief` does
+### What `/session end` does
 
 - Writes a progress log entry (what happened, ticket/PR refs)
 - Asks one question: *done for the day, or more sessions coming?*
@@ -210,7 +210,7 @@ Tier 1 / Tier 2 / Tier 3 — written by the first /session of the day
 - ...
 ```
 
-The log is the position fix. `/session` opens entries. `/debrief` closes them.
+The log is the position fix. `/session` opens entries. `/session end` closes them.
 You can look at any day's file and know exactly where you were.
 
 ---

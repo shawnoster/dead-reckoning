@@ -7,7 +7,7 @@ date: "YYYY-MM-DD"
 ## Carry-overs
 
 <!--
-Populated by /debrief from the prior day.
+Populated by /session end from the prior day.
 Symbols: ✅ done · 🔄 in-flight · ➡️ slipped · ❌ blocked
 -->
 
