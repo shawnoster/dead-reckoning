@@ -46,7 +46,7 @@ With aya, you get:
   the Nostr protocol; carry decisions and open threads between instances
   without shared login or manual file transfer
 - **Workspace health check** — `aya status` reports scheduler state, identity,
-  and integration health (also available as `make notebook-status`)
+  and integration health
 
 aya is a Python CLI tool — **not a Claude Code plugin**, cannot be installed
 via `make link-skills`. Install it separately:
@@ -133,6 +133,7 @@ workspace/
 │   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
+├── docs/              Reference guides (SDLC workflows, extension patterns)
 ├── skills/            Command definitions (session, meeting, switch, ...)
 └── Makefile           make link-skills wires skills → .claude/commands/
 ```
@@ -217,6 +218,15 @@ to understand the project context. When you're ready to work:
 
 Session types: `focus-work` · `brainstorming` · `research` · `meetings` · `writing` · `gaming`
 
+## Going further
+
+- `notebook/method.md` — the full spec: three-tier model, session lifecycle,
+  signal routing, why it's designed this way
+- `notebook/getting-started.md` — detailed walkthrough of every component
+  including the relay (work↔home sync) and MCP setup
+- `docs/sdlc-workflows.md` — how to layer a structured SDLC workflow system
+  (Superpowers, guild-ai-skills, /dev-*) on top of the DR skill pipeline
+
 ## Multi-machine relay (advanced)
 
 If you run two instances of this workspace — work and home — aya's relay syncs
@@ -234,13 +244,6 @@ aya receive --as home
 Packets are signed with your DID keypair and verified before ingesting. Requires
 pairing two aya instances first (`aya pair`). The `/relay` skill in `skills/relay/`
 handles the full send/receive/status flow. Full setup in `notebook/getting-started.md`.
-
-## Going further
-
-- `notebook/method.md` — the full spec: three-tier model, session lifecycle,
-  signal routing, why it's designed this way
-- `notebook/getting-started.md` — detailed walkthrough of every component
-  including the relay (work↔home sync) and MCP setup
 
 ## License
 
