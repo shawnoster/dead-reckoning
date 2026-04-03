@@ -219,6 +219,10 @@ to understand the project context. When you're ready to work:
 | `/plan <project>` | Design implementation — produces `plan.md` |
 | `/implement <project>` | Build — code changes with plan tracking |
 | `/finish` | Commit, push, PR, close ticket |
+| `/feature <project>` | Start a feature — find/create ticket, create branch, set In Progress |
+| `/issue-to-pr [#N]` | End-to-end: pick an issue, implement on a branch, open a PR |
+| `/address-pr-feedback` | Watch a PR for review comments, triage and address feedback |
+| `/pack-for-home` | Pack session context into an aya packet and relay to another instance |
 | `/session-learnings` | Capture what was learned to `notebook/knowledge/` |
 
 Session types: `focus-work` · `brainstorming` · `research` · `meetings` · `writing`
