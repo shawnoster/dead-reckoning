@@ -58,7 +58,8 @@ You are now in IMPLEMENTATION MODE.
 - Read all available context docs before starting
 - Stay focused on the planned changes
 - Communicate blockers or plan adjustments clearly
-- Test changes as you go
+- For each feature: write the failing test first, then the minimal implementation to make it pass
+- **On any bug or unexpected failure**: stop — state a single hypothesis, test it with the smallest possible change, verify before moving on. Do not stack multiple fixes or guess. If three attempts haven't resolved it, step back and question the approach.
 - Ask for guidance when encountering unexpected issues
 
 **Starting:**
