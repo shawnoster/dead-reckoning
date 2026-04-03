@@ -218,6 +218,9 @@ to understand the project context. When you're ready to work:
 | `/architecture <project>` | Analyze codebase — produces `architecture.md` |
 | `/plan <project>` | Design implementation — produces `plan.md` |
 | `/implement <project>` | Build — code changes with plan tracking |
+| `/feature <description>` | Start a feature — branch, ticket, project context |
+| `/issue-to-pr <issue-number>` | Full pipeline: issue → discovery → plan → implement → PR |
+| `/address-pr-feedback [pr-number]` | Triage review comments, fix, reply, and push |
 | `/finish` | Commit, push, PR, close ticket |
 | `/session-learnings` | Capture what was learned to `notebook/knowledge/` |
 
