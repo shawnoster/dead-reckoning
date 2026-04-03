@@ -45,7 +45,8 @@ With aya, you get:
 - **Work ↔ home relay** — async context sync between two machines over
   the Nostr protocol; carry decisions and open threads between instances
   without shared login or manual file transfer
-- **`make notebook-status`** — the workspace health check
+- **Workspace health check** — `aya status` reports scheduler state, identity,
+  and integration health (also available as `make notebook-status`)
 
 aya is a Python CLI tool — **not a Claude Code plugin**, cannot be installed
 via `make link-skills`. Install it separately:
