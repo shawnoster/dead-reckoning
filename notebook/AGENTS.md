@@ -103,8 +103,7 @@ Ad-hoc files use type prefix: `research-*.md`, `proposal-*.md`, `assessment-*.md
 - `/meeting` — capture a meeting
 - `/triage` — process `notebook/inbox.md` and route items out
 - `/next` — mid-session pivot between tasks
-- `/status` — workspace readiness check
-- `make notebook-status` — readiness check
+- `/status` — workspace readiness check (`aya status` if aya is installed)
 - `make link-skills` — (re)wire local skills as Claude Code commands
 
 ## Skills
