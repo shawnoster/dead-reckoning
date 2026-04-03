@@ -75,14 +75,14 @@ cd ~/workspace
 # 2. Wire skills as Claude Code commands
 make link-skills
 
-# 3. Configure machine-specific paths (see below)
+# 3. Configure machine-specific paths
 cp .workspace.local.yml.example .workspace.local.yml
 # edit .workspace.local.yml — set workspace_root and code_dirs
 
 # 4. Open Claude Code from the workspace root — this matters
 claude .
 
-# 5. First session
+# 5. Start your first session
 /session focus-work
 ```
 
@@ -133,7 +133,7 @@ workspace/
 │   ├── knowledge/     Personal evergreen knowledge — snippets, notes, links
 │   └── templates/     Project file templates
 ├── projects/          One folder per project — status, plans, decisions
-├── docs/              Reference guides (SDLC workflows, extension patterns)
+├── docs/              Reference guides — SDLC workflow patterns, extension points
 ├── skills/            Command definitions (session, meeting, switch, ...)
 └── Makefile           make link-skills wires skills → .claude/commands/
 ```
@@ -145,6 +145,11 @@ not alongside the code itself.
 
 `code/` is not a committed directory — point `code_dirs` in `.workspace.local.yml`
 to wherever you clone repos on this machine. The workspace doesn't own that directory.
+
+**`docs/`** holds reference guides that apply across projects — currently
+`sdlc-workflows.md`, which explains how to layer a structured SDLC workflow system
+(design gates, TDD plan generators, debugging protocols) on top of the DR skill
+pipeline. Add your own guides here as your workflow evolves.
 
 ### The inbox
 
@@ -216,16 +221,7 @@ to understand the project context. When you're ready to work:
 | `/finish` | Commit, push, PR, close ticket |
 | `/session-learnings` | Capture what was learned to `notebook/knowledge/` |
 
-Session types: `focus-work` · `brainstorming` · `research` · `meetings` · `writing` · `gaming`
-
-## Going further
-
-- `notebook/method.md` — the full spec: three-tier model, session lifecycle,
-  signal routing, why it's designed this way
-- `notebook/getting-started.md` — detailed walkthrough of every component
-  including the relay (work↔home sync) and MCP setup
-- `docs/sdlc-workflows.md` — how to layer a structured SDLC workflow system
-  (Superpowers, guild-ai-skills, /dev-*) on top of the DR skill pipeline
+Session types: `focus-work` · `brainstorming` · `research` · `meetings` · `writing`
 
 ## Multi-machine relay (advanced)
 
@@ -235,15 +231,24 @@ no VPN, no manual file transfer.
 
 ```bash
 # Send context to the other instance
-echo "notes here" | aya dispatch --to home --intent "end-of-day carry"
+aya relay send --to home "end-of-day notes and open threads"
 
 # Receive at home
-aya receive --as home
+aya relay receive
 ```
 
 Packets are signed with your DID keypair and verified before ingesting. Requires
 pairing two aya instances first (`aya pair`). The `/relay` skill in `skills/relay/`
 handles the full send/receive/status flow. Full setup in `notebook/getting-started.md`.
+
+## Going further
+
+- `notebook/method.md` — the full spec: three-tier model, session lifecycle,
+  signal routing, why it's designed this way
+- `notebook/getting-started.md` — detailed walkthrough of every component
+  including the relay (work↔home sync) and MCP setup
+- `docs/sdlc-workflows.md` — how to layer a structured SDLC workflow system
+  (design gates, TDD plan generators, debugging protocols) on top of the DR skill pipeline
 
 ## License
 
