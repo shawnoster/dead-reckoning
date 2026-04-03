@@ -1,35 +1,38 @@
 ---
 name: session
 description: >
-  Start a work block with declared intent. Handles all prep automatically:
-  first session of the day pulls signals (tickets, GitHub, Slack, Calendar);
-  named projects load status and context; deeper research is offered
-  progressively — each layer reveals what's beneath it, you stop when you
-  have enough. Session type shapes AI posture for the whole block.
-  Invoke when the user says "session", "/session", "starting a session",
-  "let's do a focus session", "going into brainstorm mode", "I'm about to
-  work on X", or any intent to begin a bounded work block.
-argument-hint: "<type> [focus/project]"
+  Start or close a work block. `/session <type> [project]` starts a block;
+  `/session end` closes it. On start: first session of the day pulls signals
+  (tickets, GitHub, Slack, Calendar) and builds a day plan; named projects
+  load status and context; deeper research offered progressively.
+  On end: logs what happened, asks if more sessions are coming, and either
+  does a lightweight carry-over or a full day reconcile.
+argument-hint: "<type> [focus/project] | end"
 ---
 
 # Session
 
-Start a work block. The session handles its own prep — you just declare
-what you're doing and at what scale you want to work.
+One command for the whole loop.
+
+```
+/session focus-work my-project    ← start a work block
+/session end                      ← close it
+```
 
 ---
 
 ## 0. Parse the invocation
 
-Extract from the user's message:
-- **type** — `focus-work`, `brainstorming`, `research`, `meetings`, `writing`, `gaming`, or freeform
-- **focus** — optional project name, topic, or ticket (e.g. `PROJ-189`, `dashboard deploy`, `aya architecture`)
+- **type = `end`** → skip to [§Close](#close)
+- **type = anything else** → proceed with session start below
 
-If either is missing and the session type matters (it usually does), ask once before proceeding.
+If type is missing and it matters (it usually does), ask once before proceeding.
 
 ---
 
-## 1. First-of-day check
+## Start
+
+### 1. First-of-day check
 
 Read today's daily note: `notebook/daily/YYYY-MM-DD.md`
 
@@ -41,10 +44,9 @@ Every subsequent session in the same day skips this unless the user asks.
 
 ---
 
-## 2. Signal pull (first session only)
+### 2. Signal pull (first session only)
 
-Pull the delta since the last daily note file — not a fixed window, but since
-you last ran a session:
+Pull the delta since the last daily note file:
 
 ```
 Tickets:  assigned tickets + comments on active tickets (new since last daily note date)
@@ -56,12 +58,11 @@ Calendar: today's events, any conflicts or prep needed
 Synthesize into a **Tier 1 / Tier 2 / Tier 3** plan for the day.
 Write the plan into `## Plan` in today's daily note.
 
-Keep it fast — this is orientation, not a report. Three tiers, bullet points,
-done in under 60 seconds of reading.
+Keep it fast — orientation, not a report. Three tiers, bullet points.
 
 ---
 
-## 3. Context load
+### 3. Context load
 
 If a project or focus was named, load the minimum useful context:
 
@@ -74,48 +75,39 @@ blocking it, what the obvious next action is.
 
 ---
 
-## 4. Offer to go deeper (progressive research)
+### 4. Offer to go deeper (progressive research)
 
-After the situation report, assess whether there are signals worth investigating:
-open PRs, unread ticket comments, recent commits, Slack threads. If so, offer
-one level deeper — don't just do it.
-
-**The escalation pattern:**
+After the situation report, assess whether there are signals worth investigating.
+If so, offer one level deeper — don't just do it.
 
 ```
 Level 1 (always): status.md + README loaded → situation report
-Level 2 (offer):  "PR #22 has no review yet. Want me to pull the full diff
-                   and check CI status?"
-Level 3 (offer):  "The config has 2 pending changes. Want me to
-                   trace back through recent commits to understand the drift?"
-Level 4 (offer):  "I can spawn parallel agents to build a complete picture —
-                   architecture, ticket history, Slack threads, dependencies.
-                   That'll take 2-3 minutes. Worth it?"
+Level 2 (offer):  "PR #22 has no review yet. Want me to pull the full diff?"
+Level 3 (offer):  "Two pending config changes. Want me to trace the drift?"
+Level 4 (offer):  "I can spawn parallel agents for a complete picture — 2-3 min."
 ```
 
-Each offer is one sentence. Wait for a yes before going deeper.
+One sentence per offer. Wait for yes before going deeper.
 Stop when the user says "good enough" or starts working.
 
 ---
 
-## 5. Set session posture
-
-Based on session type, declare the working mode and stick to it:
+### 5. Set session posture
 
 | Type | Posture |
 |------|---------|
-| `focus-work` | Execution-mode: concise responses, no tangents, interrupt only if blocking |
-| `brainstorming` | Expansive: ask questions, surface alternatives, hold multiple ideas open |
+| `focus-work` | Execution-mode: concise, no tangents, interrupt only if blocking |
+| `brainstorming` | Expansive: ask questions, surface alternatives, hold ideas open |
 | `research` | Context-aggressive: lead with agents, synthesize before presenting |
 | `meetings` | Capture-first: decisions + owners + actions above all else |
-| `writing` | Structure-first: coherence, flow, formatting before speed |
+| `writing` | Structure-first: coherence and flow before speed |
 | `gaming` / `play` | Personal mode: no project overhead, relaxed |
 
-State the posture briefly, then stop talking and let the user work.
+State the posture briefly, then stop talking.
 
 ---
 
-## 6. Log the session start
+### 6. Log the session start
 
 Append to `notebook/daily/YYYY-MM-DD.md` under `## Progress Log`:
 
@@ -127,9 +119,54 @@ Use `date +'%H:%M %Z'` for the timestamp. Never use `<current_datetime>`.
 
 ---
 
+## Close
+
+*Reached via `/session end`.*
+
+### 1. Log what happened
+
+Write a progress log entry — what changed, what shipped, what matters.
+Use `date +'%H:%M %Z'` for the timestamp. Max 2 lines.
+
+```
+- **HH:MM** — [what happened, ticket/PR refs if relevant]
+```
+
+### 2. One question
+
+Ask immediately after writing the entry:
+
+> *Done for the day, or more sessions coming?*
+
+**More sessions coming → lightweight close:**
+
+Note carry-overs from this block:
+
+```
+**Carry-over:** [one line — what to pick up next]
+```
+
+Done. No recap, no summary, no ceremony.
+
+**Done for the day → full reconcile:**
+
+1. **Plan vs actual** — read `## Plan` from today's daily note.
+   Note what hit, what slipped, why (one line each).
+
+2. **Carry-overs** — anything unfinished that needs tomorrow. Flag if blocking.
+
+3. **Tomorrow's stub** — create `notebook/daily/YYYY-MM-DD.md` for tomorrow.
+   Add frontmatter + `## Plan` stub with carry-overs already populated.
+
+4. **Status updates** — for any project that advanced today, update
+   `projects/<name>/status.md`: current state, blockers, next 3 actions.
+
+---
+
 ## Notes
 
 - Skip steps that don't apply — no project named means skip §3 and §4
 - A `research` session type triggers Level 3-4 depth automatically
 - If the user says "just orient me quickly" — stop after §3, no offers
-- The session posture persists for the whole block until `/debrief` or a new `/session`
+- `--day` on `/session end` forces the full reconcile without asking
+- Session posture persists until `/session end` or a new `/session`
