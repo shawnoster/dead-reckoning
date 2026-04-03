@@ -32,12 +32,12 @@ Keep notes out of `code/`. When you learn something from a codebase, write it up
 
 | Signal | Destination | Timing |
 | ---- | ---- | ---- |
-| **aya packet (trusted)** | Ingest, surface to user | Session start / `aya receive` |
-| **aya seed** | Surface as conversation opener | Session start |
+| **aya packet** *(aya only)* | Ingest, surface to user | Session start / `aya relay receive` |
+| **aya seed** *(aya only)* | Surface as conversation opener | Session start |
 | **Ticket (assigned)** | Morning briefing Tier 1 | Next `/session` |
 | **Ticket comment / update** | Morning briefing | Next `/session` |
-| **PR review feedback** | Surface immediately | Via `aya schedule watch` |
-| **CI failure (my PR)** | Surface immediately | Via watch |
+| **PR review feedback** | Surface immediately | Via `aya schedule watch` *(aya only)* or manual |
+| **CI failure (my PR)** | Surface immediately | Via watch or manual |
 | **Direct mention (messaging)** | Morning briefing | Next `/session` |
 | **Meeting notes** | `projects/<name>/meetings/` + `status.md` | End of meeting |
 | **Merged PR / completed task** | `status.md` + daily note progress log | Immediately |
@@ -55,7 +55,7 @@ Keep notes out of `code/`. When you learn something from a codebase, write it up
 
 ## Guardrails
 
-- Keep the repo **private** — personal control plane, not a team resource
+- **Your instance is a personal control plane** — it will contain decisions, notes, and project context; keep your fork private
 - **No secrets or PII** — credentials and personal data never committed
 - **Use templates** — `notebook/templates/` for all new project files
 
@@ -74,6 +74,7 @@ workspace/
 │   ├── memory/                # Scheduler state, preferences
 │   └── templates/             # Project file templates
 ├── projects/                  # Project documentation
+├── docs/                      # Reference guides
 └── skills/                    # Command definitions
 ```
 
@@ -85,13 +86,12 @@ Every project in `projects/` has two required files:
 
 ```
 projects/<project-name>/
-├── README.md      # REQUIRED — index, ticket/repo refs in frontmatter
-├── status.md      # REQUIRED — phase, blockers, next actions
-├── discovery.md   # Business context, requirements, affected repos
-├── architecture.md
-├── plan.md
-├── meetings/      # YYYY-MM-DD.md per meeting
-└── documents/     # Polished deliverables
+├── README.md        # REQUIRED — index, ticket/repo refs in frontmatter
+├── status.md        # REQUIRED — phase, blockers, next actions
+├── discovery.md     # Business context, requirements, affected repos
+├── architecture.md  # How the system works
+├── plan.md          # Agreed design approach
+└── meetings/        # YYYY-MM-DD.md per meeting
 ```
 
 Ad-hoc files use type prefix: `research-*.md`, `proposal-*.md`, `assessment-*.md`.
@@ -104,7 +104,8 @@ Ad-hoc files use type prefix: `research-*.md`, `proposal-*.md`, `assessment-*.md
 - `/triage` — process `notebook/inbox.md` and route items out
 - `/next` — mid-session pivot between tasks
 - `/status` — workspace readiness check (`aya status` if aya is installed)
-- `make link-skills` — (re)wire local skills as Claude Code commands
+
+To wire or update commands: `make link-skills` (see `skills/` directory).
 
 ## Skills
 
