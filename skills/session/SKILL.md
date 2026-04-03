@@ -55,7 +55,7 @@ Determine:
 Run concurrently:
 - `aya status -f json` — system health, alerts, reminders, watches. If aya is not installed, skip.
 - `aya context` — quick workspace snapshot (active projects, todo count, inbox size, last daily note). Use as baseline for deeper scans. If deeper scans contradict, trust the deeper scan.
-- `aya inbox --as <instance> -f json` — pending relay packets. If aya is not configured, skip.
+- `aya inbox --as <label> -f json` — pending relay packets. Read `instance_label` from `.workspace.yml` for the `--as` value. If aya is not configured, skip.
 
 ---
 
@@ -105,8 +105,8 @@ Read `.workspace.yml` for `directories.projects` (default: `projects/`).
 Scan each project's `status.md`:
 
 - Current phase and blockers
-- File modification time via `git log -1 --format='%ai' -- {file}`
-- Flag >7 days untouched as **stale**
+- Last committed change via `git log -1 --format='%ai' -- {file}` (also check filesystem mtime — uncommitted edits count as "touched")
+- Flag >7 days since last commit or edit as **stale**
 - Flag active/planning projects as priority candidates
 - Note blockers, open questions, or next steps
 
